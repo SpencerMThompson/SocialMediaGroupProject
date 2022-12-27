@@ -1,0 +1,20 @@
+﻿@model ViewModel
+@{
+
+}
+<body style="background-image: linear-gradient( 45deg, hsl(240deg 81% 66%) 0%, hsl(210deg 100% 50%) 11%, hsl(205deg 100% 50%) 22%, hsl(200deg 100% 50%) 33%, hsl(196deg 100% 50%) 44%, hsl(191deg 100% 48%) 56%, hsl(181deg 100% 42%) 67%, hsl(169deg 100% 44%) 78%, hsl(158deg 100% 46%) 89%, hsl(128deg 85% 67%) 100% );">
+
+<div class="text-center">
+    @foreach (User user in Model.Users)
+    {
+        <table  style="margin-left: auto; margin-right: auto; background: rgba( 255, 255, 255, 0.1 ); box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); backdrop-filter: blur( 14.5px ); -webkit-backdrop-filter: blur( 14.5px ); border-radius: 10px; border: 1px solid rgba( 255, 255, 255, 0.18 );">
+            <tr>
+                <th style="color: ghostwhite;">@user.UserName</th>
+            </tr>
+            <tr>
+                <td>@user.Email</td>
+            </tr>
+        </table>
+    }
+</div>
+</body>

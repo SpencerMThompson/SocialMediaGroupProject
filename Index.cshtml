@@ -1,0 +1,67 @@
+﻿@model ViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    int? userId;
+    string userName;
+}
+<body style="background-image: linear-gradient( 45deg, hsl(240deg 81% 66%) 0%, hsl(210deg 100% 50%) 11%, hsl(205deg 100% 50%) 22%, hsl(200deg 100% 50%) 33%, hsl(196deg 100% 50%) 44%, hsl(191deg 100% 48%) 56%, hsl(181deg 100% 42%) 67%, hsl(169deg 100% 44%) 78%, hsl(158deg 100% 46%) 89%, hsl(128deg 85% 67%) 100%);">
+
+    <div class="text-center">
+        <input type="button" value="Add Post" id="addPost" asp-controller="Home" asp-action="CreatePost" onclick="location.href='@Url.Action("CreatePost", "Home")'">
+        @foreach (Post post in Model.Posts)
+        {
+
+            <div style="display:none;">
+                @(userId = post.UserId)
+            </div>
+            <table id="@post.PostId" style="margin-left: auto; margin-right: auto; background: rgba( 255, 255, 255, 0.1 ); box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); backdrop-filter: blur( 14.5px ); -webkit-backdrop-filter: blur( 14.5px ); border-radius: 10px; border: 1px solid rgba( 255, 255, 255, 0.18 );">
+                <tr>
+                    <th style="color: ghostwhite; ">@(userName = Model.getUsername(post.UserId))</th>
+                </tr>
+                <tr>
+                    <td>@post.PostBody</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="likePost" type="button" value="👍" asp-controller="Home" asp-action="LikePost" onclick="location.href='@Url.Action("LikePost", "Home", post)'" />@post.NumberOfLikes Likes
+                    </td>
+                </tr>
+                @if (post.UserId == Model.CurrentUser.UserId)
+                {
+                    @:<tr>
+                        @:<td>
+                            <input type="button" value="Edit" asp-controller="Home" asp-action="EditPost" onclick="location.href='@Url.Action("EditPost", "Home", post)'">
+                            <input type="button" value="Delete" asp-controller="Home" asp-action="DeletePost" onclick="location.href = '@Url.Action("DeletePost", "Home", post)'">
+                        @:</td>
+                    @:</tr>
+                }
+            </table>
+        }
+    </div>
+    </body>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+    let user = "@ViewBag.UserId";
+    console.log(user);
+    if (user == "0" || user == "-1" || user == null) {
+        $("#addPost").hide();
+    }
+    $("#logout").click(() => {
+        $("#addPost").hide();
+    });
+    $("#likePost").click(() => {
+        $("likePost").hide();
+    });
+
+    </script>
+    <style>
+        input[type=button] {
+            background: rgba( 188, 60, 123, 0.35 );
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 0px );
+            -webkit-backdrop-filter: blur( 0px );
+            border-radius: 10px;
+            border: 1px solid rgba( 255, 255, 255, 0.18 );
+        }
+    </style>
+
